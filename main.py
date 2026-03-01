@@ -1,17 +1,13 @@
 from fastapi import FastAPI
-from routes.prediction_routes import router as prediction_router
+from api.v1.routes import prediction_routes
 
 app = FastAPI(
     title="Student Risk Prediction API",
-    version="2.0",
-    description="AI-powered academic risk detection system"
+    version="1.0.0"
 )
 
-@app.get("/health", tags=["Health"])
-def health_check():
-    return {
-        "status": "running",
-        "version": "2.0"
-    }
-
-app.include_router(prediction_router)
+app.include_router(
+    prediction_routes.router,
+    prefix="/api/v1",
+    tags=["Prediction"]
+)
